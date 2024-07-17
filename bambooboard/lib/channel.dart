@@ -1,3 +1,4 @@
+import 'package:bambooboard/controller/health_controller.dart';
 import 'package:bambooboard/controller/identity_controller.dart';
 import 'package:bambooboard/controller/register_controller.dart';
 import 'package:bambooboard/controller/user_controller.dart';
@@ -70,6 +71,10 @@ class BambooboardChannel extends ApplicationChannel
         .link(() => Authorizer.bearer(authServer))!
         .link(() => UserController(context, authServer));
 
+    // Add the health check route
+    router.route("/health").link(() => HealthController());
+
+
     return router;
   }
 
@@ -112,7 +117,6 @@ class BambooboardChannel extends ApplicationChannel
     return htmlRenderer.renderHTML("web/login.html", map);
   }
 }
-
 
 /// An instance of this class represents values from a configuration
 /// file specific to this application.
